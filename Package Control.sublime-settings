@@ -1,0 +1,16 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Beautiful Soup Completion",
+		"C++ Completions",
+		"Console Exec",
+		"CppFastOlympicCoding",
+		"Package Control",
+		"PackageResourceViewer",
+		"Xdebug Client"
+	]
+}
