@@ -1,0 +1,44 @@
+<snippet>
+	<content><![CDATA[
+int d, x, y;
+void extendedEuclid(int a, int b)
+{
+    if(b == 0)
+    {
+        d = a;
+        x = 1;
+        y = 0;
+    }
+    else 
+    {
+        extendedEuclid(b, a%b);
+        int temp = x;
+        x = y;
+        y = temp - (a/b)*y;
+    }
+}
+
+int power(int a,int b,int M)
+{
+    a%=M;
+    int res=1;
+    while(b)
+    {
+        if(b&1)res=(res*a)%M;
+        b/=2;
+        a=(a*a)%M;
+    }
+    return res;
+}
+
+int inverse(int a, int b)
+{
+    extendedEuclid(a,b);
+    return (x%b+b)%b;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>inversemodulo</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

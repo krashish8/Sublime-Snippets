@@ -1,0 +1,20 @@
+<snippet>
+	<content><![CDATA[
+int fact(int n) 
+{ 
+    int res = 1; 
+    for (int i = 2; i <= n; i++) 
+        res = res * i; 
+    return res; 
+}
+
+int ncr(int n, int r) 
+{ 
+    return fact(n) / (fact(r) * fact(n - r)); 
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>ncr:O(n*k)</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

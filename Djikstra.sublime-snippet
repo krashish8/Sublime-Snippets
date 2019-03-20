@@ -1,0 +1,31 @@
+<snippet>
+	<content><![CDATA[
+priority_queue <pii, vector<pii>, greater<pii>> q;
+vector<pii> adj[N];
+bool vis[N];
+
+int n, x;
+int dis[N];
+
+for(int i = 0; i <= n; i++) dis[x] = inf;
+dis[x] = 0;
+q.push({0,x});			// dist, node
+while(!q.empty()) {
+	int a = q.top().se;
+	q.pop();
+	if(vis[a]) continue;
+	vis[a] = 1;
+	for (auto u: adj[a]) {
+		int b = u.fi, w = u.se;
+		if(dis[a]+w < dis[b]) {
+			dis[b] = dis[a] + w;
+			q.push({dis[b], b});
+		}
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>djikstra</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

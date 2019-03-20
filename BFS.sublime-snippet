@@ -1,0 +1,26 @@
+<snippet>
+	<content><![CDATA[
+vector<int> adj[N];
+queue<int> q;
+bool vis[N];
+int d[N];
+
+vis[x] = 1;
+q.push(x);
+d[x] = 0;
+while(!q.empty()) {
+	int s = q.front();
+	q.pop();
+	for (auto u: adj[s]) {
+		if(vis[u]) continue;
+		vis[u] = 1;
+		d[u] = d[s] + 1;
+		q.push(u);
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>bfs</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
