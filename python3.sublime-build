@@ -1,0 +1,6 @@
+{
+    "cmd": ["%LOCALAPPDATA%/Programs/Python/Python37/python.exe", "-u", "$file"],
+    "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+    "selector": "source.python",
+    "target": "console_exec"
+}
