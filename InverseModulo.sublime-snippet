@@ -1,5 +1,8 @@
 <snippet>
 	<content><![CDATA[
+
+// Works when number and MOD are coprime
+
 int gcdExtended(int a, int b, int &x, int &y)
 {
     if(a == 0)
