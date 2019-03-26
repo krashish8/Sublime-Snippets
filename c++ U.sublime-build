@@ -12,7 +12,7 @@
 [ 
 {
 "name": "Run",
-"cmd": ["bash", "-c", "g++ -std=c++14 -DLOCAL '${file}' -o '${file_path}/${file_base_name}' && gnome-terminal -x bash -c '\"${file_path}/${file_base_name}\" ; read'"] 
+"cmd": ["bash", "-c", "g++ -std=c++14 -DLOCAL '${file}' -o '${file_path}/${file_base_name}' && terminator -x bash -c '\"${file_path}/${file_base_name}\" ; read'"] 
 }
 ] 
 }
