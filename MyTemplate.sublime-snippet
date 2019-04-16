@@ -5,12 +5,11 @@
 using namespace std;
 
 #define int long long int
-#define double long double
 #define pb push_back
 #define pii pair<int,int>
 #define fi first
 #define se second
-#define rep(i,a,b) for (int i=a; i<b; ++i)
+#define rep(i,a,b) for (int i = a; i < b; ++i)
 #define dbg(x) { cerr<<#x<<": "<<x<< endl; }
 #define dbg2(x,y) { cerr<<#x<<": "<<x<<" , "<<#y<<": "<<y<<endl; }
 #define dbg3(x,y,z) { cerr<<#x<<": "<<x<<" , "<<#y<<": "<<y<<" , "<<#z<<": "<<z<<endl; }
