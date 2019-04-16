@@ -79,7 +79,7 @@ void tree(int n) {
 
 signed main()
 {
-	//freopen("input.txt","w",stdout);
+	freopen("input.txt","w",stdout);
 	IOS;
 	
 	
