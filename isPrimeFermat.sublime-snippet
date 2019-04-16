@@ -1,0 +1,19 @@
+<snippet>
+	<content><![CDATA[
+bool isPrimeFermat(int n, int iter = 5) {
+    if (n < 4)
+        return n == 2 || n == 3;
+    for (int i = 0; i < iter; ++i)
+    {
+        int a = 2 + rand()%(n-3);
+        if(power(a, n-1, n) != 1)
+            return false;
+    }
+    return true;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>isPrimeFermat</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
