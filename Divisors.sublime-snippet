@@ -1,7 +1,7 @@
 <snippet>
 	<content><![CDATA[
 vector<int> divisors(int n) 
-{
+{ 
     vector<int> v;
     for (int i=1; i<=sqrt(n); i++) 
     {
