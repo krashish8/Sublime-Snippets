@@ -7,7 +7,7 @@
 [ 
 {
 "name": "Run",
-"cmd": ["bash", "-c", "gcc '${file}' -o '${file_path}/${file_base_name}' && gnome-terminal -x bash -c '\"${file_path}/${file_base_name}\" ; read'"] 
+"cmd": ["bash", "-c", "gcc '${file}' -o '${file_path}/${file_base_name}' && gnome-terminal -- bash -c '\"${file_path}/${file_base_name}\" ; read'"] 
 }
 ] 
 }
