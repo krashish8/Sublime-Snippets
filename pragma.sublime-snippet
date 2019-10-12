@@ -1,20 +1,12 @@
 <snippet>
 	<content><![CDATA[
-queue<int> q;
-q.push(x);
-vis[x] = 1;
-while (!q.empty()) {
-	int t = q.front();
-	q.pop();
-	for (auto i : g[t] ){
-		if (vis[i]) continue;
-		vis[i] = 1;
-		q.push(i);
-	}
-}
+#pragma GCC optimize ("Ofast")
+#pragma comment(linker, "/stack:200000000")
+#pragma GCC optimize ("Ofast,unroll-loops")
+#pragma GCC target ("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,avx2,tune=native")
 ]]></content>
 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-	<tabTrigger>bfs</tabTrigger> -->
+	<tabTrigger>pragma</tabTrigger>
 	<!-- Optional: Set a scope to limit where the snippet will trigger -->
 	<!-- <scope>source.python</scope> -->
 </snippet>

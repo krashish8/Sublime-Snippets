@@ -1,0 +1,4 @@
+{
+    "cmd": ["mysql", "--login-path=local", "-e", "source $file", "-t"],
+    "selector": "source.sql"
+}

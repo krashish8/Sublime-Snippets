@@ -1,13 +1,10 @@
 <snippet>
 	<content><![CDATA[
-vector<int> adj[N];
-bool vis[N];
-
-void dfs (int n) {
-	if(vis[n]) return;
+void dfs(int n) {
+	if (vis[n]) return;
 	vis[n] = 1;
-	for(auto u:adj[n])
-		dfs(u);
+	for (auto i : g[n])
+		dfs(i);
 }
 ]]></content>
 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->

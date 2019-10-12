@@ -1,0 +1,6 @@
+{
+	"cmd" : ["g++ -std=c++14 -DLOCAL '${file}' -o '${file_path}/tempfiles/${file_base_name}' && ./tempfiles/$file_base_name<input.txt>output.txt"],
+	"selector" : "source.c, source.c++, source.cxx, source.cpp",
+	"shell" : true,
+	"working_dir": "${file_path}"
+}
