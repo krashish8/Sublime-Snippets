@@ -66,14 +66,38 @@ void strmx(int mxlen, int n) {
 } 
 
 void tree(int n) {
-	int exc = rand(1,n);
-	for (int i = 1; i <= n; ++i)
-	{
-		if(i==exc) continue;
-		int first = rand(1,n);
-		while(first==i) first = rand(1,n);
-		cout<<first<<" "<<i<<endl;
-	}
+	int prufer[n-2];
+    rep(i,0,n){
+        prufer[i] = rand(1,n);
+    }
+    int m = n-2;
+    int vertices = m + 2; 
+    int vertex_set[vertices]; 
+    for (int i = 0; i < vertices; i++) 
+        vertex_set[i] = 0; 
+    for (int i = 0; i < vertices - 2; i++) 
+        vertex_set[prufer[i] - 1] += 1; 
+    int j = 0; 
+    for (int i = 0; i < vertices - 2; i++) { 
+        for (j = 0; j < vertices; j++) { 
+            if (vertex_set[j] == 0) { 
+                vertex_set[j] = -1; 
+                cout << (j + 1) << " "
+                     << prufer[i] << '\n'; 
+                vertex_set[prufer[i] - 1]--; 
+                break; 
+            } 
+        } 
+    } 
+    j = 0; 
+    for (int i = 0; i < vertices; i++) { 
+        if (vertex_set[i] == 0 && j == 0) { 
+            cout << (i + 1) << " "; 
+            j++; 
+        } 
+        else if (vertex_set[i] == 0 && j == 1) 
+            cout << (i + 1) << "\n"; 
+    }
 }
 
 
