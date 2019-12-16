@@ -67,7 +67,7 @@ void strmx(int mxlen, int n) {
 
 void tree(int n) {
 	int prufer[n-2];
-    rep(i,0,n){
+    rep(i,0,n-2){
         prufer[i] = rand(1,n);
     }
     int m = n-2;
