@@ -10,13 +10,17 @@ using namespace std;
 #define fi first
 #define se second
 #define rep(i,a,b) for (int i = a; i < b; ++i)
-#define dbg(x) { cerr<<"> "<<#x<<": "<<x<< endl; }
-#define dbg2(x,y) { cerr<<"> "<<#x<<": "<<x<<" , "<<#y<<": "<<y<<endl; }
-#define dbg3(x,y,z) { cerr<<"> "<<#x<<": "<<x<<" , "<<#y<<": "<<y<<" , "<<#z<<": "<<z<<endl; }
 #define IOS ios::sync_with_stdio(false); cin.tie(0); cout.tie(0)
 #ifndef LOCAL
 #define endl '\n'
 #endif
+#define dbg(...)    cerr << "> "; ZZ(#__VA_ARGS__,__VA_ARGS__);
+template <typename Arg1> void ZZ(const char* val1, Arg1&& arg1) { cerr << val1 << ": " << arg1 << endl; }
+template <typename Arg1, typename... Args> void ZZ(const char* vals, Arg1&& arg1, Args&&... args){
+    const char* comma = strchr(vals + 1, ',');
+    std::cerr.write(vals, comma - vals) << ": " << arg1<<" , ";
+    ZZ(comma+1, args...);
+}
 
 const int inf = INT_MAX;
 const int MOD = 1e9 + 7;
@@ -26,6 +30,11 @@ const int N = 2e5 + 5;
 
 signed main(){
     IOS;
+    #ifdef LOCAL
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    
     
     return 0;
 }
