@@ -30,11 +30,6 @@ const int N = 2e5 + 5;
 
 signed main(){
     IOS;
-    #ifdef LOCAL
-        freopen("input.txt", "r", stdin);
-        freopen("output.txt", "w", stdout);
-    #endif
-    
     
     return 0;
 }
