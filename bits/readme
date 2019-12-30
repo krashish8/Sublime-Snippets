@@ -1,0 +1,1 @@
+g++ -std=c++14 -DLOCAL -Wall -Wno-unknown-pragmas -Wextra -O2 -Wshadow -pedantic -Wformat=2 -Wfloat-equal -Wconversion -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector stdc++.h

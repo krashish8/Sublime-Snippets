@@ -11,16 +11,18 @@ using namespace std;
 #define se second
 #define rep(i,a,b) for (int i = a; i < b; ++i)
 #define IOS ios::sync_with_stdio(false); cin.tie(0); cout.tie(0)
-#ifndef LOCAL
-#define endl '\n'
-#endif
-#define dbg(...)    cerr << "> "; ZZ(#__VA_ARGS__,__VA_ARGS__);
+#ifdef LOCAL
+#define dbg(...) cerr << "> "; ZZ(#__VA_ARGS__,__VA_ARGS__);
 template <typename Arg1> void ZZ(const char* val1, Arg1&& arg1) { cerr << val1 << ": " << arg1 << endl; }
 template <typename Arg1, typename... Args> void ZZ(const char* vals, Arg1&& arg1, Args&&... args){
     const char* comma = strchr(vals + 1, ',');
     std::cerr.write(vals, comma - vals) << ": " << arg1<<" , ";
     ZZ(comma+1, args...);
 }
+#else
+#define dbg(...) ;
+#define endl '\n'
+#endif
 
 const int inf = INT_MAX;
 const int MOD = 1e9 + 7;

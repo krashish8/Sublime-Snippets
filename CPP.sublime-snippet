@@ -28,7 +28,7 @@ using namespace std;
 #define eps         0.000001
 #define endl        '\n'
 #define N           200005
-#define dbg(...)    cout<<"> "; ZZ(#__VA_ARGS__,__VA_ARGS__)
+#define dbg(...)    cerr<<"> "; ZZ(#__VA_ARGS__,__VA_ARGS__);
 template <typename Arg1> void ZZ(const char* val1, Arg1&& arg1) { cerr<<val1<<": "<<arg1<<endl; }
 template <typename Arg1, typename... Args> void ZZ(const char* vals, Arg1&& arg1, Args&&... args){
     const char* comma = strchr(vals + 1, ',');
