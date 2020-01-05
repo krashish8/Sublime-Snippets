@@ -1,5 +1,6 @@
 [
-	{ "keys": ["ctrl+b"], "command": "build", "args": {"variant": ""} },
+	{ "keys": ["ctrl+b"], "command": "build", "args": {"variant": "Fast"} },
+	{ "keys": ["ctrl+shift+b"], "command": "build", "args": {"variant": ""} },
 	{ "keys": ["ctrl+alt+shift+q"], "command": "reindent", "args": {"single_line": false} },
 	{ "keys": ["ctrl+tab"], "command": "next_view" },
 	{ "keys": ["ctrl+shift+tab"], "command": "prev_view" }
