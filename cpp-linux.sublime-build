@@ -1,14 +1,24 @@
 {
-	"cmd": ["bash", "-c", "g++ -std=c++14 -DLOCAL -Wall -Wno-unknown-pragmas -Wextra -O2 -Wshadow -pedantic -Wformat=2 -Wfloat-equal -Wconversion -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector '${file}' -o '${file_path}/${file_base_name}' && timeout 10s '${file_path}/${file_base_name}' <input.txt >output.txt"],
+	"cmd": ["bash", "-c", "g++ -std=c++14 -DLOCAL '${file}' -o '${file_path}/${file_base_name}' && timeout 5s '${file_path}/${file_base_name}' < ~/input.txt > ~/output.txt"],
 	"file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 	"working_dir": "${file_path}",
 	"selector": "source.c, source.c++",
 	"variants":
 	[
 		{
-			"name": "Fast",
+			"name": "Run",
 			"shell": false,
-			"cmd": ["bash", "-c", "g++ -std=c++14 -DLOCAL -Wall -Wno-unknown-pragmas -Wextra -O2 -Wshadow '${file}' -o '${file_path}/${file_base_name}' && timeout 5s '${file_path}/${file_base_name}' <input.txt >output.txt"]
+			"cmd": ["bash", "-c", "g++ -std=c++14 -DLOCAL -Wall -Wno-unknown-pragmas -Wextra -O2 -Wshadow '${file}' -o '${file_path}/${file_base_name}' && timeout 5s '${file_path}/${file_base_name}' < ~/input.txt > ~/output.txt"]
+		},
+		{
+			"name": "Check",
+			"shell": false,
+			"cmd": ["bash", "-c", "g++ -std=c++14 -DLOCAL -Wall -Wno-unknown-pragmas -Wextra -O2 -Wshadow -pedantic -Wformat=2 -Wfloat-equal -Wconversion -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector '${file}' -o '${file_path}/${file_base_name}' && timeout 5s '${file_path}/${file_base_name}' < ~/input.txt > ~/output.txt"]
+		},
+		{
+			"name": "Terminal",
+			"shell": false,
+			"cmd": ["bash", "-c", "g++ -std=c++14 -DLOCAL '${file}' -o '${file_path}/${file_base_name}' && gnome-terminal -- bash -c '${file_path}/${file_base_name} ; read'"]
 		}
 	]
 }

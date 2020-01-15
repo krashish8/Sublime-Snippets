@@ -1,0 +1,6 @@
+{
+    "shell_cmd": "python3 $file_name && timeout 10s",
+    "file_regex": "^(...*?):([0-9]*):?([0-9]*)",
+    "selector": "source.python3",
+    "working_dir": "$file_path"
+}
