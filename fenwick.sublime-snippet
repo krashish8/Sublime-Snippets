@@ -1,0 +1,35 @@
+<snippet>
+	<content><![CDATA[
+template <typename T>
+struct Fenwick {
+    vector<T> bit;
+    int n;
+
+    Fenwick(int _n) : n(_n) {
+        bit.resize(n);
+    }
+
+    // Increment the value of node
+    void update(int x, T v) {
+        while (x < n) {
+            bit[x] += v;
+            x += (x & -x); // For 0 based indexing, x |= (x + 1);
+        }
+    }
+
+    // Get prefix sum from [1 ... x]
+    T sum(int x) {
+        T v{};
+        while (x > 0) {
+            v += bit[x];
+            x -= (x & -x); // For 0 based indexing, x = (x & (x + 1)) - 1; and x >= 0
+        }
+        return v;
+    }
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>fenwick</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

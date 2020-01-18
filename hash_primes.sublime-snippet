@@ -1,20 +1,9 @@
 <snippet>
 	<content><![CDATA[
-'''
-Problem Name: 
-Problem Link: 
-Author: Ashish Kumar (ashishkr23438)
-'''
-import time
-start_time = time.time()
-
-print("Time Taken: "+(time.time() - start_time))
-'''
-
-'''
+// 999999929, 999999937, 1000000007, 1000000009, 1000000021
 ]]></content>
 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-	<tabTrigger>projectEulerPy</tabTrigger> -->
+	<tabTrigger>hashPrimes</tabTrigger>
 	<!-- Optional: Set a scope to limit where the snippet will trigger -->
 	<!-- <scope>source.python</scope> -->
 </snippet>
