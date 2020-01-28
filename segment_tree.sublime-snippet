@@ -156,24 +156,24 @@ struct SegTree
 		build(1, 1, N, v);
 	}
 
-	data query(int pos)
-	{
-		return pquery(1, 1, N, pos);
-	}
-
 	data query(int l, int r)
 	{
 		return query(1, 1, N, l, r);
 	}
 
-	void update(int pos, int val)
+	data query(int pos)
 	{
-		pupdate(1, 1, N, pos, val);
+		return pquery(1, 1, N, pos);
 	}
 
 	void update(int l, int r, int val)
 	{
 		update(1, 1, N, l, r, val);
+	}
+
+	void update(int pos, int val)
+	{
+		pupdate(1, 1, N, pos, val);
 	}
 };
 ]]></content>

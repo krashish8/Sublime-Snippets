@@ -1,0 +1,25 @@
+<snippet>
+	<content><![CDATA[
+std::ostream& operator<<(std::ostream& os, SegTree s)
+{
+    os << "[";
+    for (int i = 1; i <= 4 * s.N; i++) {
+        os << "[";
+        for (int j = 1; j <= 4 * s.M; j++) {
+            os << s.st[i][j].val;
+            if (j != 4*s.M)
+                os << ", ";
+        }
+        os << "]";
+        if (i != 4 * s.N)
+            os << ", ";
+    }
+    os << "]";
+    return os;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>segmenttree2dDebug</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
