@@ -7,6 +7,7 @@ struct Fenwick {
 
     Fenwick(int _n) : n(_n) {
         bit.resize(n);
+        bit2.resize(n);
     }
 
     // Increment the value of node
@@ -54,13 +55,14 @@ struct Fenwick {
         update(l, v, bit);
         update(r+1, -v, bit);
 
-        update(l, (l-1)*v, bit2);
-        update(r+1, -r*v, bit2);
+        update(l, -(l-1)*v, bit2);
+        update(r+1, (l-1)*v, bit2);
+        update(r+1, (r-l+1)*v, bit2);
     }
 
     // Prefix sum in case of range update
     T rprefsum(int x) {
-        return prefsum(x, bit)*x - prefsum(x, bit2);
+        return prefsum(x, bit)*x + prefsum(x, bit2);
     }
 
     T rsum(int l, int r) {

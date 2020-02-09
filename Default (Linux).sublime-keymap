@@ -1,7 +1,7 @@
 [
 	{ "keys": ["ctrl+b"], "command": "build", "args": {"variant": ""} },
 	{ "keys": ["ctrl+shift+b"], "command": "build", "args": {"variant": "Run"} },
-	{ "keys": ["ctrl+alt+b"], "command": "build", "args": {"variant": "Check"} },
+	{ "keys": ["ctrl+shift+x"], "command": "build", "args": {"variant": "Check"} },
 	{ "keys": ["ctrl+shift+z"], "command": "build", "args": {"variant": "Terminal"} },
 	{ "keys": ["ctrl+alt+shift+q"], "command": "reindent", "args": {"single_line": false} },
 	{ "keys": ["ctrl+tab"], "command": "next_view" },

@@ -174,3 +174,17 @@ std::ostream& operator<<(std::ostream& os, const std::pair<T, S>& p)
     os << "(" << p.first << ", " << p.second << ")"; 
     return os; 
 }
+
+template<typename T1, size_t arrSize, 
+         typename = std::enable_if_t<!std::is_same<T1,char>::value>>
+std::ostream& operator <<( std::ostream& os, const T1( & arr )[arrSize] )
+{
+    os << "["; 
+    for (int i = 0; i < arrSize; ++i) { 
+        os << arr[i]; 
+        if (i != arrSize - 1) 
+            os << ", "; 
+    } 
+    os << "]";
+    return os;
+}

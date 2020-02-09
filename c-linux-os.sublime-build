@@ -1,0 +1,14 @@
+{
+	"cmd": ["bash", "-c", "gcc -pthread -lrt '${file}' -o '${file_path}/${file_base_name}' && gnome-terminal -- bash -c '\"${file_path}/${file_base_name}\"; read'"],
+	"file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
+	"working_dir": "${file_path}",
+	"selector": "source.c, source.c++",
+	"variants":
+	[
+		{
+			"name": "Run",
+			"shell": false,
+			"cmd": ["bash", "-c", "gcc -pthread -lrt '${file}' -o '${file_path}/${file_base_name}' && gnome-terminal -- bash -c '\"${file_path}/${file_base_name}\" ; read'"]
+		}
+	]
+}

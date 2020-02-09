@@ -10,7 +10,7 @@ using namespace std;
 #define fi first
 #define se second
 #define rep(i,a,b) for (int i = a; i < b; ++i)
-#define IOS ios::sync_with_stdio(false); cin.tie(0); cout.tie(0)
+#define IOS ios::sync_with_stdio(false); cin.tie(NULL);
 #ifdef LOCAL
 #define dbg(...) {cerr << "> "; ZZ(#__VA_ARGS__,__VA_ARGS__);}
 template <typename Arg1> void ZZ(const char* val1, Arg1&& arg1) { cerr << val1 << ": " << arg1 << endl; }
@@ -24,7 +24,7 @@ template <typename Arg1, typename... Args> void ZZ(const char* vals, Arg1&& arg1
 #define endl '\n'
 #endif
 
-const int inf = INT_MAX;
+const int inf = 1e15;
 const int MOD = 1e9 + 7;
 const int N = 2e5 + 5;
 
