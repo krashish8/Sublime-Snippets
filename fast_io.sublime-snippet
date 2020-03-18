@@ -8,7 +8,7 @@ static struct IO {
  
 //#define nextChar() (cur = getc_unlocked(stdin))
 //#define peekChar() (cur)
-	inline char nextChar() { return cur = getc_unlocked(stdin); }
+	inline char nextChar() { return cur = getchar(); }
 	inline char peekChar() { return cur; }
  
 	inline operator bool() { return peekChar(); }
@@ -55,7 +55,7 @@ defineInFor(long long)
 	// fast output routines
  
 // #define putChar(c) putc_unlocked((c), stdout)
-	inline void putChar(char c) { putc_unlocked(c, stdout); }
+	inline void putChar(char c) { putchar(c); }
 	inline IO& operator << (char c) { putChar(c); return *this; }
 	inline IO& operator << (const char * s) { while (*s) putChar(*s++); return *this; }
  
