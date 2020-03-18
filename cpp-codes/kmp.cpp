@@ -1,0 +1,32 @@
+template <typename T>
+vector<int> LPS(const T &pat) {
+	int m = pat.size();
+	vector<int> lps(m);
+	int i = 1, j = 0;
+	while (i < m) {
+		if (pat[i] == pat[j]) lps[i] = j+1, i++, j++;
+		else if (j != 0) j = lps[j-1];
+		else i++;
+	}
+	return lps;
+}
+
+template <typename T>
+vector<int> KMP(const T &s, const T &pat) {
+	vector<int> lps = LPS(pat);
+	vector<int> ans;
+	int m = pat.size(), n = s.size();
+	int i = 0, j = 0;
+	while (i < n) {
+		if (s[i] == pat[j]) i++, j++;
+		if (j == pat.size()) {
+			ans.push_back(i);
+			j = lps[j-1];
+		}
+		else if (s[i] != pat[j]) {
+			if (j != 0) j = lps[j-1];
+			else i++;
+		}
+	}
+	return ans;
+}
