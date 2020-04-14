@@ -1,0 +1,9 @@
+<snippet>
+	<content><![CDATA[
+// 999999929, 999999937, 1000000007, 1000000009, 1000000021
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>hashPrimes</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

@@ -152,6 +152,35 @@ std::ostream& operator<<(std::ostream& os, const std::set<T>& s)
     return os; 
 } 
 
+// C++ template to print multiset container elements 
+template <typename T> 
+std::ostream& operator<<(std::ostream& os, const std::multiset<T>& s) 
+{ 
+    os << "["; 
+    for (auto it : s) { 
+        os << it; 
+        if (it != *s.rbegin()) 
+            os << ", "; 
+    } 
+    os << "]"; 
+    return os; 
+} 
+
+// C++ template to print unordered_set container elements 
+template <typename T> 
+std::ostream& operator<<(std::ostream& os, const std::unordered_set<T>& s) 
+{ 
+    os << "["; 
+    int sz = s.size();
+    for (auto it = s.begin(); it != s.end(); it++) { 
+        os << *it; 
+        if (--sz) 
+            os << ", "; 
+    } 
+    os << "]"; 
+    return os; 
+} 
+
 // C++ template to print map container elements 
 template <typename T, typename S> 
 std::ostream& operator<<(std::ostream& os, const std::map<T, S>& m) 
@@ -173,4 +202,26 @@ std::ostream& operator<<(std::ostream& os, const std::pair<T, S>& p)
 { 
     os << "(" << p.first << ", " << p.second << ")"; 
     return os; 
+}
+
+template<typename T1, size_t arrSize, 
+         typename = std::enable_if_t<!std::is_same<T1,char>::value>>
+std::ostream& operator <<( std::ostream& os, const T1( & arr )[arrSize] )
+{
+    os << "["; 
+    for (int i = 0; i < arrSize; ++i) { 
+        os << arr[i]; 
+        if (i != arrSize - 1) 
+            os << ", "; 
+    } 
+    os << "]";
+    return os;
+}
+
+#define dbg(...)    ZZ(#__VA_ARGS__,__VA_ARGS__);
+template <typename Arg1> void ZZ(const char* val1, Arg1&& arg1) { std::cerr<<val1<<": "<<arg1<<std::endl; }
+template <typename Arg1, typename... Args> void ZZ(const char* vals, Arg1&& arg1, Args&&... args){
+    const char* comma = strchr(vals + 1, ',');
+    std::cerr.write(vals, comma - vals) << ": " << arg1<<" , ";
+    ZZ(comma+1, args...);
 }

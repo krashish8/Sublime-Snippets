@@ -1,0 +1,45 @@
+<snippet>
+	<content><![CDATA[
+struct DSU {
+    int comp;
+    vector<int> par, size;
+    int n;
+
+    DSU(int _n) : n(_n) {
+        par.resize(n+1);
+        size.resize(n+1);
+        for (int i = 1; i <= n; i++) {
+            par[i] = i;
+            size[i] = 1;
+        }
+        comp = n;
+    }
+
+    inline int getpar(int x) {
+        if (x == par[x]) return x;
+        return par[x] = getpar(par[x]);
+    }
+
+    inline int getsize(int x) {
+        return size[getpar(x)];
+    }
+
+    inline bool unite(int x, int y) {
+        x = getpar(x);
+        y = getpar(y);
+        if (x != y) {
+            if (size[x] < size[y]) swap(x, y);
+            size[x] += size[y];
+            par[y] = x;
+            comp--;
+            return true;
+        }
+        return false;
+    }
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>dsu</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

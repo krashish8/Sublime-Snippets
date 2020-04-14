@@ -1,5 +1,3 @@
-<snippet>
-	<content><![CDATA[
 template <typename T>
 vector<int> LPS(const T &pat) {
 	int m = pat.size();
@@ -32,9 +30,3 @@ vector<int> KMP(const T &s, const T &pat) {
 	}
 	return ans;
 }
-]]></content>
-	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-	<tabTrigger>kmp</tabTrigger>
-	<!-- Optional: Set a scope to limit where the snippet will trigger -->
-	<!-- <scope>source.python</scope> -->
-</snippet>
