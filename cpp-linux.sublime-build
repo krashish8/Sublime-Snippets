@@ -19,7 +19,17 @@
 			"name": "Terminal",
 			"shell": false,
 			"cmd": ["bash", "-c", "g++ -std=c++14 -DLOCAL '${file}' -o '${file_path}/${file_base_name}' && gnome-terminal -- bash -c '\"${file_path}/${file_base_name}\" ; read'"]
-		}
+		},
+		{
+			"name": "Run 20s",
+			"shell": false,
+			"cmd": ["bash", "-c", "g++ -std=c++14 -DLOCAL -Wall -Wno-unknown-pragmas -Wextra -O2 -Wshadow '${file}' -o '${file_path}/${file_base_name}' && timeout 20s '${file_path}/${file_base_name}' < ~/input.txt > ~/output.txt"]
+		},
+		{
+			"name": "Run 35s",
+			"shell": false,
+			"cmd": ["bash", "-c", "g++ -std=c++14 -DLOCAL -Wall -Wno-unknown-pragmas -Wextra -O2 -Wshadow '${file}' -o '${file_path}/${file_base_name}' && timeout 35s '${file_path}/${file_base_name}' < ~/input.txt > ~/output.txt"]
+		},
 	]
 }
 // https://codeforces.com/blog/entry/15547
