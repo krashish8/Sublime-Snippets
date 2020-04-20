@@ -30,6 +30,21 @@
 			"shell": false,
 			"cmd": ["bash", "-c", "g++ -std=c++14 -DLOCAL -Wall -Wno-unknown-pragmas -Wextra -O2 -Wshadow '${file}' -o '${file_path}/${file_base_name}' && timeout 35s '${file_path}/${file_base_name}' < ~/input.txt > ~/output.txt"]
 		},
+		{
+			"name": "Stress Tester",
+			"shell": false,
+			"cmd": ["bash", "-c", "gnome-terminal -- bash -c 'stress-test \"${file}\" normal 500; read'"]
+		},
+		{
+			"name": "Custom Tester",
+			"shell": false,
+			"cmd": ["bash", "-c", "gnome-terminal -- bash -c 'stress-test \"${file}\" custom 500; read'"]
+		},
+		{
+			"name": "Interactive Tester",
+			"shell": false,
+			"cmd": ["bash", "-c", "gnome-terminal -- bash -c 'stress-test \"${file}\" interactive 500; read'"]
+		},
 	]
 }
 // https://codeforces.com/blog/entry/15547
