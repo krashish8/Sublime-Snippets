@@ -204,20 +204,7 @@ std::ostream& operator<<(std::ostream& os, const std::pair<T, S>& p)
     return os; 
 }
 
-template<typename T1, size_t arrSize, 
-         typename = std::enable_if_t<!std::is_same<T1,char>::value>>
-std::ostream& operator <<( std::ostream& os, const T1( & arr )[arrSize] )
-{
-    os << "["; 
-    for (int i = 0; i < arrSize; ++i) { 
-        os << arr[i]; 
-        if (i != arrSize - 1) 
-            os << ", "; 
-    } 
-    os << "]";
-    return os;
-}
-
+#ifdef LOCAL
 #define dbg(...)    ZZ(#__VA_ARGS__,__VA_ARGS__);
 template <typename Arg1> void ZZ(const char* val1, Arg1&& arg1) { std::cerr<<val1<<": "<<arg1<<std::endl; }
 template <typename Arg1, typename... Args> void ZZ(const char* vals, Arg1&& arg1, Args&&... args){
@@ -225,3 +212,4 @@ template <typename Arg1, typename... Args> void ZZ(const char* vals, Arg1&& arg1
     std::cerr.write(vals, comma - vals) << ": " << arg1<<" , ";
     ZZ(comma+1, args...);
 }
+#endif
