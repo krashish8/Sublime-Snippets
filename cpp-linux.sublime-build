@@ -33,17 +33,17 @@
 		{
 			"name": "Stress Tester",
 			"shell": false,
-			"cmd": ["bash", "-c", "gnome-terminal -- bash -c 'stress-test \"${file}\" normal 500; read'"]
+			"cmd": ["bash", "-c", "gnome-terminal -- bash -c 'stress-test.sh \"${file}\" normal 50000; read'"]
 		},
 		{
 			"name": "Custom Tester",
 			"shell": false,
-			"cmd": ["bash", "-c", "gnome-terminal -- bash -c 'stress-test \"${file}\" custom 500; read'"]
+			"cmd": ["bash", "-c", "gnome-terminal -- bash -c 'stress-test.sh \"${file}\" custom 500; read'"]
 		},
 		{
 			"name": "Interactive Tester",
 			"shell": false,
-			"cmd": ["bash", "-c", "gnome-terminal -- bash -c 'stress-test \"${file}\" interactive 500; read'"]
+			"cmd": ["bash", "-c", "gnome-terminal -- bash -c 'stress-test.sh \"${file}\" interactive 500; read'"]
 		},
 	]
 }
