@@ -1,0 +1,46 @@
+<snippet>
+	<content><![CDATA[
+const int BLOCK_SIZE = sqrt(N);
+
+// answer all queries starting in first block, then second block, etc. (offline)
+// for queries starting in one block, order them in ascending order of right index
+// l in one block: unordered (√N * Q queries)
+// r in one block: ordered in ascending order (N * √N blocks)
+inline bool mo_sort(const pii &a, const pii &b) {
+    if (a.first / BLOCK_SIZE != q.first / BLOCK_SIZE)
+        return a < b;
+    // optimization
+    if (a.first / BLOCK_SIZE & 1)
+        return a.second < b.second;
+    else
+        return a.second > b.second;
+}
+
+    sort(qq, qq + q, mo_sort);
+
+    int cur_l = 0, cur_r = -1;
+    for (int i = 0; i < q; i++) {
+        // first add, then remove
+        if (cur_l > qq[i].first) {
+            cur_l--;
+            add(cur_l);
+        }
+        if (cur_r < qq[i].second) {
+            cur_r++;
+            add(cur_r);
+        }
+        if (cur_l < qq[i].first) {
+            remove(cur_l);
+            cur_l++;
+        }
+        if (cur_r > qq[i].second) {
+            remove(cur_r);
+            cur_r--;
+        }
+    }
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>mo</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
