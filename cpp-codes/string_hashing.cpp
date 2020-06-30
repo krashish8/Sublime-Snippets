@@ -5,6 +5,8 @@ struct Hash
     int P;
     int MOD;
 
+    Hash () {}
+
     template <typename T>
     Hash(const T &s, int _Prime=31, int _MOD=1000000007) : P(_Prime), MOD(_MOD) 
     {

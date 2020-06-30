@@ -1,7 +1,9 @@
-const int LOGN = 20;
+const int LOGN = 18;
 
 vector<int> g[N];
 int dep[N], dp[LOGN][N];
+bool mark[N];
+int sz[N], par[N];
 
 // Traversal is started from node 1.
 // dp[i][x]: moving towards parent node = x + 2^i node in main tree
@@ -44,4 +46,35 @@ int lca(int u, int v) {
 
 int dis(int a, int b) {
     return dep[a] + dep[b] - 2 * dep[lca(a, b)];
+}
+
+// --> Centroid Decomposition
+
+int dfs(int u, int p) {
+    sz[u] = 1;
+    for (auto v : g[u]) {
+        if (v == p || mark[v]) continue;
+        sz[u] += dfs(v, u);
+    }
+    return sz[u];
+}
+
+int centroid(int u, int p, int n) {
+    for (auto v : g[u]) {
+        if (v == p || mark[v]) continue;
+        if (sz[v] > n / 2) return centroid(v, u, n);
+    }
+    return u;
+}
+
+void decompose(int u, int p) {
+    int n = dfs(u, p);
+    int c = centroid(u, p, n);
+    mark[c] = 1;
+    if (p == 0) p = c;
+    par[c] = p;
+    for (auto v : g[c]) {
+        if (!mark[v])
+            decompose(v, c);
+    }
 }
