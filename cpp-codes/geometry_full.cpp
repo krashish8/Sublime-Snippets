@@ -1,0 +1,402 @@
+//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+
+
+const double EPS = 1e-6;
+const double PI = acos(-1);
+
+#define ptype double
+
+struct point {
+    ptype x, y;
+
+    point() {}
+    point(int _x, int _y) : x(_x), y(_y) {}
+
+    point& operator+=(const point &p) { x += p.x; y += p.y; return *this; }
+    point& operator-=(const point &p) { x -= p.x; y -= p.y; return *this; }
+    point& operator*=(ptype a) { x *= a; y *= a; return *this; }
+    point& operator/=(ptype a) { x /= a; y /= a; return *this; }
+
+    point operator+(const point &p) const { return point(*this) += p; }
+    point operator-(const point &p) const { return point(*this) -= p; }
+    point operator*(ptype a) const { return point(*this) *= a; }
+    point operator/(ptype a) const { return point(*this) /= a; }
+    bool operator==(const point &p) { return (x == p.x && y == p.y); }
+    bool operator!=(const point &p) { return !(x == p.x && y == p.y); }
+};
+
+point operator*(ptype a, point p) { return p * a; }
+
+ostream& operator<<(ostream &os, const point &p) {
+    os << "(" << p.x << ", " << p.y << ")";
+    return os;
+}
+
+ptype dot(point a, point b) { return a.x * b.x + a.y * b.y; }
+ptype cross(point a, point b) { return a.x * b.y - a.y * b.x; }
+ptype dist2(point a, point b) { return dot(a - b, a - b); }
+ptype abs2(point a) { return a.x * a.x + a.y * a.y; }
+
+// Rotate a point CCW or CW
+point rotateCCW90(point p) { return point(-p.y, p.x); }
+point rotateCW90(point p) { return point(p.y, -p.x); }
+point rotateCCW(point p, double t) {
+    return point(p.x*cos(t) - p.y*sin(t), p.x*sin(t) + p.y*cos(t));
+}
+
+
+//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+
+
+// Orthogonal projection of a point c onto line a-b
+point projectPointLine(point a, point b, point c) {
+    assert(a != b);
+    return a + (b - a) * dot(c-a, b-a) / dot(b-a, b-a);
+}
+
+// Nearest point on line segment a-b from point c
+point nearestPointLineSegment(point a, point b, point c) {
+    double r = dot(b - a, b - a);
+    if (abs(r) < EPS) return a;
+    r = dot(c-a, b-a) / r;
+    if (r < 0) return a;
+    if (r > 1) return b;
+    return a + (b - a) * r;
+}
+
+// Distance from point c to line a-b
+double distPointLine(point a, point b, point c) {
+    return sqrtl(dist2(c, projectPointLine(a, b, c)));
+}
+
+// Distance from point c to line segment a-b
+double distPointLineSegment(point a, point b, point c) {
+    return sqrtl(dist2(c, nearestPointLineSegment(a, b, c)));
+}
+
+// 3D: Distance between point(x,y,z) and plane ax+by+cz = d
+double distPointPlane(double x, double y, double z, double a, double b, double c, double d) {
+    return abs(a*x + b*y + c*z - d) / sqrtl(a*a + b*b + c*c);
+}
+
+// Whether line a-b and c-d are parallel or collinear
+bool isLinesParallel(point a, point b, point c, point d) {
+    return abs(cross(b-a, c-d)) < EPS;
+}
+bool isLinesCollinear(point a, point b, point c, point d) {
+    return isLinesParallel(a, b, c, d) && abs(cross(a-b, a-c)) < EPS && abs(cross(c-d, c-a)) < EPS;
+}
+
+// Whether line segments a-b and c-d intersect
+bool isSegmentsIntersect(point a, point b, point c, point d) {
+    if (isLinesCollinear(a, b, c, d)) {
+        if (dist2(a, c) < EPS || dist2(a, d) < EPS || dist2(b, c) < EPS || dist2(b, d) < EPS)
+            return true;
+        if (dot(c-a, c-b) > 0 && dot(d-a, d-b) > 0 && dot(c-b, d-b) > 0)
+            return false;
+        return true;
+    }
+    if (cross(d-a, b-a) * cross(c-a, b-a) > 0) return false;
+    if (cross(a-c, d-c) * cross(b-c, d-c) > 0) return false;
+    return true;
+}
+
+// compute intersection point of line a-b and c-d (assuming unique intersection exists)
+// For segment intersection, check if segments intersect first
+point computeLineIntersection(point a, point b, point c, point d) {
+    b = b - a;
+    d = c - d;
+    c = c - a;
+    assert(dot(b, b) > EPS && dot(d, d) > EPS);
+    return a + b*cross(c, d)/cross(b, d);
+}
+
+
+// Whether b lies in the ray starting from a in the direction v
+bool isRayOnPoint(point a, point v, point b) {
+    b = b - a;
+    // A and B in the same line
+    if(abs(b.x*v.y - b.y*v.x) < EPS) {
+        // in the same ray
+        if(b.x*v.x >= -EPS && b.y*v.y >= -EPS)
+            return 1;
+        return 0;
+    }
+    return 0;
+}
+
+int sign(point a, point b, point c) {
+    return ((cross(b-a, c-b) < 0) ? -1 : 1);
+}
+
+
+// Line: ax + by + c = 0
+struct line {
+    double a, b, c;
+    line() {}
+    line(double _a, double _b, double _c) : a(_a), b(_b), c(_c) {}
+};
+
+bool areParallel(line l1, line l2) { return abs(l1.a - l2.a) < EPS && abs(l1.b - l2.b) < EPS; }
+bool areSame(line l1, line l2) { return areParallel(l1, l2) && abs(l1.c - l2.c) < EPS; }
+
+
+//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+
+
+// Whether point is in a possibly non-convex polygon (by William Randolph Franklin)
+// returns 1: strictly interior points, 0: strictly exterior points, 0 or 1: remaining
+// It is possible to convert this test into an exact test using integer arithmetic
+// by taking care of division appropriately (making sure to deal with signs properly)
+// and then by writing exact tests for checking point on polygon boundary
+bool isPointInPolygon(const vector<point> &p, point q) {
+    bool c = 0;
+    for (int i = 0; i < p.size(); i++){
+        int j = (i+1)%p.size();
+        if ((p[i].y <= q.y && q.y < p[j].y || p[j].y <= q.y && q.y < p[i].y) &&
+              q.x < (p[i].x + (p[j].x-p[i].x)*(q.y-p[i].y)/(p[j].y-p[i].y)))
+            c = !c;
+    }
+    return c;
+}
+
+// Whether the point is on the boundary of polygon
+bool isPointOnPolygon(const vector<point> &p, point q) {
+    for (int i = 0; i < p.size(); i++)
+        if (dist2(nearestPointLineSegment(p[i], p[(i+1)%p.size()], q), q) < EPS)
+            return true;
+    return false;
+}
+
+
+// Compute area or centroid of a possibly non-convex polygon,
+// assuming that coordinates are listed in CW or CCW order.
+// Centroid: "centre of gravity" or "centre of mass".
+double computeSignedAreaOrdered(const vector<point> &p) {
+    double area = 0;
+    for (int i = 0; i < p.size(); i++) {
+        int j = (i+1) % p.size();
+        area += p[i].x * p[j].y - p[j].x * p[i].y;
+    }
+    return area / 2.0;
+}
+double computeArea(const vector<point> &p) {
+    return abs(computeSignedAreaOrdered(p));
+}
+point computeCentroid(const vector<point> &p) {
+    point c(0,0);
+    double scale = 6.0 * computeSignedAreaOrdered(p);
+    for (int i = 0; i < p.size(); i++){
+        int j = (i+1) % p.size();
+        c = c + (p[i]+p[j]) * (p[i].x*p[j].y - p[j].x*p[i].y);
+    }
+    return c / scale;
+}
+
+// Whether a given polygon (in CW or CCW order) is simple
+bool isSimpleOrdered(const vector<point> &p) {
+    for (int i = 0; i < p.size(); i++) {
+        for (int k = i + 1; k < p.size(); k++) {
+            int j = (i+1) % p.size();
+            int l = (k+1) % p.size();
+            if (i == l || j == k)
+                continue ;
+            if (isSegmentsIntersect(p[i], p[j], p[k], p[l]))
+                return false;
+        }
+    }
+    return true;
+}
+
+// QUADRILATERALS
+/*
+    Area of trapezium : 0.5 * (w1 + w2) * h
+        w1 and w2 are parallel edges and h is height
+    Area of kite : 0.5 * d1 * d2
+*/
+
+// Whether angle ABC is a right-angle
+int isOrthogonal(point &a, point &b, point &c) {
+    return (b.x-a.x) * (b.x-c.x) + (b.y-a.y) * (b.y-c.y) == 0;
+}
+
+// Whether ABCD forms a rectangle, in any orientation
+int isRectangleAnyOrder(point &a, point &b, point &c, point &d)
+{
+    auto isRectangle = [](point &a, point &b, point &c, point &d) {
+        return isOrthogonal(a, b, c) && isOrthogonal(b, c, d) && isOrthogonal(c, d, a);
+    };
+    return isRectangle(a, b, c, d) || isRectangle(b, c, a, d) || isRectangle(c, a, b, d);
+}
+
+// Whether ABCD forms a square, in any orientation
+int isSquareAnyOrder(point &a, point &b, point &c, point &d)
+{
+    auto isEqualDist = [](point &a, point &b, point &c) {
+        return dist2(a, b) == dist2(b, c);
+    };
+    return isRectangleAnyOrder(a, b, c, d) &&
+        isEqualDist(a,b,c) && isEqualDist(b,c,d) && isEqualDist(c,d,a);
+}
+
+
+//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+
+
+// compute centre of circle with three points
+point computeCircleCentre(point a, point b, point c) {
+    b = (a+b) / 2;
+    c = (a+c) / 2;
+    return computeLineIntersection(b, b + rotateCW90(a-b), c, c + rotateCW90(a-c));
+}
+
+// Intersection of line a-b with circled centred at c, radius r
+vector<point> circleLineIntersection(point a, point b, point c, double r) {
+    vector<point> ret;
+    b = b - a;
+    a = a - c;
+    double A = dot(b, b);
+    double B = dot(a, b);
+    double C = dot(a, a) - r*r;
+    double D = B*B - A*C;
+    if (D < -EPS)
+        return ret;
+    ret.push_back(c + a + b * (-B+sqrtl(D+EPS)) / A);
+    if (D > EPS)
+        ret.push_back(c + a + b * (-B-sqrtl(D)) / A);
+    return ret;
+}
+
+// Intersection of circle(centre a, radius r) with circle(centre b, radius R)
+vector<point> circleCircleIntersection(point a, point b, double r,  double R) {
+    vector<point> ret;
+    double d = sqrtl(dist2(a, b));
+    if (d > r+R || d+min(r, R) < max(r, R))
+        return ret;
+    double x = (d*d - R*R + r*r) / (2*d);
+    double y = sqrtl(r*r - x*x);
+    point v = (b-a)/d;
+    ret.push_back(a + v*x + rotateCCW90(v)*y);
+    if (y > 0)
+        ret.push_back(a + v*x - rotateCCW90(v)*y);
+    return ret;
+}
+
+// Area of arc formed by circle and line a-c and b-c
+double arcArea(point a, point b, point c, double r) {
+    double cosa = dot(a-c,b-c) / ( sqrt(abs2(a-c)) * sqrt(abs2(b-c)) );
+    double ang = acos(cosa);
+    if(ang > 2 * PI)
+        ang = 2 * PI - ang;
+    return 0.5 * r * r * ang;
+}
+
+// Area of intersection of triangle a1-a2-c and circle(c, r)
+double triangleCircleArea (point a1, point a2, point c, double r) {
+    double ans = 0;
+    double d1 = dist2(a1, c), d2 = dist2(a2, c);
+    if(d1 > d2) swap(d1, d2), swap(a1, a2);
+    if(d2 <= r * r) {
+        ans = 0.5 * abs(cross(a1-c, a2-c));
+    }
+    else if(d1 <= r*r) {
+        auto vv = circleLineIntersection(a1,a2,c,r);
+        point C = vv[0];
+        if(vv.size() > 1 && dot(vv[1]-a1, vv[1]-a2) < 0)
+            C = vv[1];
+        vv = circleLineIntersection(a2, c, c, r);
+        point D = vv[0];
+        if(vv.size() > 1 && dot(vv[1]-a2, vv[1]-c) < 0)
+            D = vv[1];
+        ans = arcArea(C, D, c, r) + 0.5*abs(cross(C-c, a1-c));
+    }
+    else {
+        auto vv = circleLineIntersection(a1, a2, c, r);
+        if(vv.size() <= 1 || dot(a1-vv[0], a2-vv[0]) > 0) {
+            ans = arcArea(a1, a2, c, r);
+        }
+        else {
+            if(dist2(a1, vv[1]) < dist2(a1, vv[0]))
+                swap(vv[0], vv[1]);
+            ans = arcArea(a1, vv[0], c, r) + arcArea(a2, vv[1], c, r) +
+                    0.5 * abs(cross(vv[0]-c, vv[1]-c));
+        }
+    }
+    return abs(ans);
+}
+
+
+// Calculate intersection area of polygon and circle
+double polyCircleArea(vector<point> &a, point c, double r) {
+    int n = a.size();
+    if(n <= 2) return 0;
+    double ans=0;
+    for (int i = 0; i < n; i++)
+        ans += triangleCircleArea(a[i], a[(i+1)%n], c, r) * sign(c,a[i],a[(i+1)%n]);
+    return abs(ans);
+}
+
+// Circle with centre: point(c) and radius r
+struct Circle: point {
+    double r;
+    Circle() {}
+    Circle(point c, double r) : point(c.x, c.y), r(r) {}
+
+    bool strictContains(point p) { return dist2((*this), p) < r*r; }
+    bool onBorder(point p) { return abs(dist2((*this), p) - r*r)<EPS; }
+    bool contains(point p) { return strictContains(p) || onBorder(p); }
+};
+
+// Find common tangents to 2 circles
+// Returns vector containing all common tangents
+vector<line> tangents(Circle a, Circle b) {
+    auto tangents = [](point c, double r1, double r2, vector<line> &ans) {
+        double r = r2 - r1;
+        double z = c.x * c.x + c.y * c.y;
+        double d = z - r * r;
+        if (d < -EPS) return;
+        d = sqrt(abs(d));
+        line l((c.x*r + c.y*d) / z, (c.y*r - c.x*d) / z, r1);
+        ans.push_back(l);
+    };
+    assert(a != b);
+    vector<line> ans;
+    ans.clear();
+    for (int i = -1; i <= 1; i += 2) {
+        for (int j = -1; j <= 1; j += 2) {
+            tangents(b-a, a.r * i, b.r * j, ans);
+        }
+    }
+    for(int i = 0; i < (int)ans.size(); i++) {
+        ans[i].c -= ans[i].a * a.x + ans[i].b * a.y;
+    }
+    vector<line> ret;
+    for (int i = 0; i < (int)ans.size(); i++) {
+        bool ok = true;
+        for (int j = 0; j < i; j++) {
+            if (areSame(ret[j], ans[i])) {
+                ok = false;
+                break;
+            }
+        }
+        if (ok) ret.push_back(ans[i]);
+    }
+    return ret;
+}
+/*
+    Radius of incircle = A / s
+    Radius of circumcircle = abc / 4A
+    Incentre: intersection of angle bisectors
+    Circumcentre: meeting point of perpendicular bisectors
+    Cosine Law :- c^2 = a^2 + b^2 - 2 * a * b * cosC
+    Sine Law :- a / sinA = b / sinB = c / sinC = 2R(circumradius)
+*/
+
+
+//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+

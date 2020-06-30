@@ -1,33 +1,51 @@
 <snippet>
 	<content><![CDATA[
-int timer = 1, in[N], out[N], up[N][M], l;
- 
-void dfs(int n, int p) {
-    in[n] = timer++;
-    up[n][0] = p;
-    for (int i = 1; i <= l; i++) {
-        up[n][i] = up[up[n][i-1]][i-1];
+const int LOGN = 20;
+
+vector<int> g[N];
+int dep[N], dp[LOGN][N];
+
+// Traversal is started from node 1.
+// dp[i][x]: moving towards parent node = x + 2^i node in main tree
+// dep[x]: depth of node x in main tree, descending from parent
+
+void dfs2(int u, int p) {
+    for (auto v : g[u]) {
+        if (v == p) continue;
+        dep[v] = dep[u] + 1;
+        dp[0][v] = u;
+        dfs2(v, u);
     }
-    for (auto i: g[n]) {
-        if (i != p)
-            dfs(i, n);
+}
+
+void preprocess(int n) {
+    dep[1] = 0;
+    dp[0][1] = 1;
+    dfs2(1, 0);
+    for (int k = 1; k < LOGN; k++) {
+        for (int i = 1; i <= n; i++) {
+            dp[k][i] = dp[k-1][dp[k-1][i]];
+        }
     }
-    out[n] = timer++;
 }
- 
-bool is_ancestor(int u, int v)
-{
-    return in[u] <= in[v] && out[u] >= out[v];
-}
- 
+
 int lca(int u, int v) {
-    if (is_ancestor(u, v)) return u;
-    if (is_ancestor(v, u)) return v;
-    for (int i = l; i >= 0; i--) {
-        if (!is_ancestor(up[u][i], v))
-            u = up[u][i];
+    if (dep[u] > dep[v]) swap(u, v);
+    int d = dep[v] - dep[u];
+    for (int k = LOGN - 1; k >= 0; k--) {
+        if (d & (1 << k))
+            v = dp[k][v];
     }
-    return up[u][0];
+    if (u == v) return u;
+    for (int k = LOGN - 1; k >= 0; k--) {
+        if (dp[k][u] != dp[k][v])
+            u = dp[k][u], v = dp[k][v];
+    }
+    return dp[0][u];
+}
+
+int dis(int a, int b) {
+    return dep[a] + dep[b] - 2 * dep[lca(a, b)];
 }
 ]]></content>
 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->

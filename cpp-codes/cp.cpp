@@ -3,6 +3,7 @@
 using namespace std;
 
 #define int long long int
+#define double long double
 #define pb push_back
 #define pii pair<int,int>
 #define fi first
