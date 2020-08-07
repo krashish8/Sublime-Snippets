@@ -20,8 +20,8 @@ do
     if [[ $line == "["*"]" ]]; then
         DIRNAME=${line#"["}
         DIRNAME=${DIRNAME%"]"}
-        DIRNAME="${COUNTER}. ${DIRNAME}"
-        COUNTER=$((COUNTER+1))
+        DIRNAME="${DIRCOUNTER}. ${DIRNAME}"
+        DIRCOUNTER=$((DIRCOUNTER+1))
         FILECOUNTER=1
         mkdir $BASEDIR/"$DIRNAME"
     elif [[ $line == *"|"* ]]; then
