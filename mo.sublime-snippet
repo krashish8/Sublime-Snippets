@@ -2,8 +2,8 @@
 	<content><![CDATA[
 // answer all queries starting in first block, then second block, etc. (offline)
 // for queries starting in one block, order them in ascending order of right index
-// l in one block: unordered (√N * Q queries)
-// r in one block: ordered in ascending order (N * √N blocks)
+// l in one block: unordered (SQRT(N) * Q queries)
+// r in one block: ordered in ascending order (N * SQRT(N) blocks)
 
 int a[N];
 const int S = sqrt(N);

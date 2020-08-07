@@ -1,0 +1,90 @@
+[Template]
+cp.cpp                       |   CP
+fast_io.cpp                  |   FAST IO
+test_gen.cpp                 |   Test Generator
+random.cpp                   |   Random
+
+
+[Others]
+execution_time.cpp           |   Execution Time
+pragma.cpp                   |   Pragma
+
+
+[Arrays]
+cute_lis.cpp                 |   Cute LIS
+mapping.cpp                  |   Mapping (Coordinate Compression)
+max_subarray_sum.cpp         |   Maximum Subarray Sum
+
+
+[Number Theory]
+prime_factors.cpp            |   Prime Factors
+big_integer.cpp              |   Big Integer
+check_prime1.cpp             |   Check Prime 1
+check_prime.cpp              |   Check Prime
+custom_hash.cpp              |   Custom Hash
+diophantine.cpp              |   Diophantine
+divisors.cpp                 |   Divisors
+extended_gcd.cpp             |   Extended GCD
+inverse_modulo.cpp           |   Inverse Modulo
+is_power_2.cpp               |   Is Power of 2
+is_prime_fermat.cpp          |   Is Prime (Fermat)
+ncr1.cpp                     |   NcR 1
+ncr.cpp                      |   NcR
+ncr_modm.cpp                 |   NcR MOD M
+power_exponentiation.cpp     |   Power exponentiation
+spf.cpp                      |   Smallest Prime Factor (SPF)
+sieve.cpp                    |   Sieve
+large_multiplication.cpp     |   Large Multiplication
+matrix.cpp                   |   Matrix Template
+hash_primes.cpp              |   Hash Primes
+
+
+[Graphs]
+dfs.cpp                      |   DFS
+dfs_full.cpp                 |   DFS Full
+bfs.cpp                      |   BFS
+djikstra.cpp                 |   Dijkstra
+bipartite.cpp                |   Bipartite
+articulation_points.cpp      |   Articulation Point
+bellman_ford.cpp             |   Bellman Ford
+graph_moves.cpp              |   Graph Moves
+kosaraju.cpp                 |   Kosaraju (SCC)
+lca.cpp                      |   LCA
+
+
+[String]
+string_hashing.cpp           |   String Hashing
+z_function.cpp               |   Z Function
+kmp.cpp                      |   KMP Algorithm
+hashing.cpp                  |   String Hashing
+
+
+[Data Structures]
+segment_tree_2d.cpp          |   Segment Tree 2D
+segment_tree_2d_debug.cpp    |   Segment Tree 2D Debug
+segment_tree.cpp             |   Segment Tree
+segment_tree_debug.cpp       |   Segment Tree Debug
+segment_tree_dynamic.cpp     |   Segment Tree Dynamic
+pbds.cpp                     |   PBDS (Ordered Set)
+dsu.cpp                      |   DSU
+sparse_table.cpp             |   Sparse Table
+sparse_table_2d.cpp          |   Sparse Table 2D
+trie.cpp                     |   Trie
+trie_pointer.cpp             |   Trie with pointers
+centroid_decomposition.cpp   |   Centroid Decomposition
+fenwick_2d.cpp               |   Fenwick 2D
+fenwick_2d_range.cpp         |   Fenwick 2D Range Queries
+fenwick.cpp                  |   Fenwick
+sqrt.cpp                     |   SQRT Decomposition
+treap.cpp                    |   Treap
+hld.cpp                      |   HLD
+mo.cpp                       |   Mo's Algorithm
+
+
+[Geometry]
+convex_hull.cpp              |   Convex Hull
+geometry_circle.cpp          |   Geometry (Circle)
+geometry_full.cpp            |   Geometry Full
+geometry_line.cpp            |   Geometry (Line)
+geometry_point.cpp           |   Geometry (Point)
+geometry_polygon.cpp         |   Geometry (Polygon)

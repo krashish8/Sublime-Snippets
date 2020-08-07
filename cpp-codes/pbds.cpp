@@ -6,3 +6,4 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 // p.order_of_key(x); // number of elements strictly less than x (index of x)
 // *p.find_by_order(x); // value at index x
 // multiset: less -> less_equal --------BETTER, DON'T USE THIS
+// If using pairs, use ->first and not .first

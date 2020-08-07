@@ -30,6 +30,27 @@ struct Fenwick {
         return prefsum(r) - prefsum(l-1);
     }
 
+    // 1 based indexing
+    T kthorder(int k) {
+        int l = 1, h = (int)pow(2, ceil(log2(n)));
+        // For 0 based indexing: l--; h--; (everything shifts down by 1)
+        int ans = -1;
+        while (l < h) {
+            int mid = (l + h) / 2;
+            // mid is inclusive for lower bound
+            if (mid < n && k <= bit[mid]) {
+                ans = mid;
+                h = mid;
+            }
+            else {
+                if (mid < n)
+                    k -= bit[mid];
+                l = mid + 1;
+            }
+        }
+        return ans;
+    }
+
     // ----------------------------------------------------------------------------
 
     void update(int x, T v, vector<T> &_bit) {

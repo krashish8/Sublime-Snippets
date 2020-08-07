@@ -4,131 +4,154 @@ int rand(int l, int r){
     return uid(rng);
 }
 
+// -------------------------- COMMON FOR REGULAR AND IMPLICIT --------------------------
+
 struct node {
-	int prior, size;
-	int val, sum; // info stored for this node
-	int lazy;
-	node *l, *r;
+    node *left, *right;
+    int val, prior, lazy, cnt;
 
-	node(int _val) {
-		prior = rand(1, 2e9);
-		size = 1;
-		sum = val = _val;
-		lazy = 0;
-		l = r = NULL;
-	}
-}; typedef node* pnode;
+    node(int _val) {
+        left = right = NULL;
+        val = _val;
+        prior = rand(1, 2e9);
+        lazy = 0;
+        cnt = 1;
+    }
+};
 
-int sz(pnode t) {
-	return t ? t->size : 0;
+int count(node *t) {
+    return (t == NULL) ? 0 : t->cnt;
 }
 
-void update_size(pnode t) {
-	if (t)
-		t->size = sz(t->l) + 1 + sz(t->r);
+// change push() and update() for lazy propagation (implicit)
+void push(node *t) {
+    if (!t || !t->lazy) return;
 }
 
-// Lazy propagation
-void push(pnode t) {
-	if (!t || !t->lazy) return;
-
-	// Calculate answer for this node
-	t->val += t->lazy;
-	t->sum = t->lazy * sz(t);
-
-	if (t->l) t->l->lazy += t->lazy;
-	if (t->r) t->r->lazy += t->lazy;
-	t->lazy = 0;
+// update the size (or other values) during split and merge (after recursion)
+// (Everything is done using split and merge)
+void update(node *t) {
+    if (!t) return;
+    t->cnt = count(t->left) + count(t->right) + 1;
+    push(t);
 }
 
-// Reset value of a node to original node (except val, size, lazy)
-void reset(pnode t) {
-	t->sum = t->val;
+// when all the val of one treap is less than the val of other treap (regular and implicit)
+void merge(node *&t, node *l, node *r) {
+    push(l);
+    push(r);
+    if (l == NULL) t = r;
+    else if (r == NULL) t = l;
+    else if (l -> prior >= r->prior) {
+        merge(l->right, l->right, r);
+        t = l;
+    }
+    else {
+        merge(r->left, l, r->left);
+        t = r;
+    }
+    update(t);
 }
 
-// Merge like operations of Segment Tree
-void combine(pnode &t, pnode l, pnode r) {
-	if (!l || !r) return void(t = l ? l : r);
-	t->sum = l->sum + r->sum;
+// 1 indexed
+node *find_kth(node *&t, int k) {
+    push(t);
+    if (k - count(t->left) == 1) return t;
+    else if (k <= count(t->left)) return find_kth(t->left, k);
+    else return find_kth(t->right, k - count(t->left) - 1);
 }
 
-// Operation of Segment Tree
-void operation(pnode t) {
-	if (!t) return;
-	reset(t);
-	push(t->l); push(t->r);
-	combine(t, t->l, t); combine(t, t, t->r);
+void printtreap(node* t) {
+    if (!t) return;
+    printtreap(t->left);
+    cerr << t->val << " ";
+    printtreap(t->right);
 }
 
-void split(pnode t, pnode &l, pnode &r, int val, int add=0) {
-	if (!t)
-		return void(l = r = NULL);
-	push(t);
-	int cur_val = add + sz(t->l); // Index of current element
-	if (val >= t->val)
-		split(t->r, t->r, r, val, cur_val + 1), l = t; // Index of right = cur_val + 1
-	else
-		split(t->l, l, t->l, val, add), r = t;
-	update_size(t);
-	operation(t);
+// -------------------------- ONLY FOR REGULAR TREAP --------------------------
+
+// divide tree into l and r with all val of l <= val, and all val of r > val
+void split(node *t, node *&l, node *&r, int val) {
+    if (t == NULL) {
+        l = r = NULL;
+        return;
+    }
+    if (t->val <= val) {
+        split(t->right, t->right, r, val);
+        l = t;
+    }
+    else {
+        split(t->left, l, t->left, val);
+        r = t;
+    }
+    update(t);
 }
 
-void merge(pnode &t, pnode l, pnode r) {
-	push(l); push(r);
-	if (!l || !r) t = l ? l : r;
-	else if (l->prior >= r->prior) merge(l->r, l->r, r), t = l;
-	else merge(r->l, l, r->l), t = r;
-	update_size(t);
-	operation(t);
+void insert(node *&t, int val) {
+    if (t == NULL) {
+        t = new node(val);
+        return;
+    }
+    node *l = NULL, *r = NULL;
+    split(t, l, r, val);
+    node *n = new node(val);
+    merge(l, l, n);
+    merge(t, l, r);
 }
 
-void insert(pnode &t, int val, int pos) { // pos is the key
-	if (!t)
-		return void(t = new node(val));
-	pnode l, r;
-	pnode item = new node(val);
-	split(t, l, r, pos);
-	merge(l, l, item);
-	merge(t, l, r);
+void erase(node *&t, int val) {
+    if (t == NULL) {
+        return;
+    }
+    node *l = NULL, *r = NULL, *ll = NULL, *lr = NULL;
+    split(t, l, r, val);
+    split(l, ll, lr, val - 1);
+    // erasing only one
+    if (count(lr) > 1) {
+        merge(lr, lr->left, lr->right);
+        merge(ll, ll, lr);
+    }
+    merge(t, ll, r);
 }
 
-void erase(pnode &t, int val) {
-	if (!t) return;
-	if (t->val == val) merge(t, t->l, t->r);
-	else erase(t->val > val ? t->l : t->r, val);
+bool find_val(node *t, int val) {
+    if (t == NULL) return false;
+    if (t -> val == val) return true;
+    else if (t->val < val) return find_val(t->right, val);
+    else return find_val(t->left, val);
 }
 
-void unite(pnode &t, pnode l, pnode r) {
-	push(l); push(r);
-	if (!l || !r) return void(t = l ? l : r);
-	if (l->prior < r->prior) swap(l, r);
-	pnode lt, rt;
-	split(r, lt, rt, l->val);
-	unite(l->l, l->l, lt);
-	unite(l->r, l->r, rt);
-	t = l;
+// -------------------------- ONLY FOR IMPLICIT TREAP --------------------------
+
+void split_implicit(node *t, node *&l, node *&r, int pos) {
+    if (t == NULL) {
+        l = r = NULL;
+        return;
+    }
+    if (count(t->left) + 1 <= pos) {
+        split(t->right, t->right, r, pos - count(t->left) - 1);
+        l = t;
+    }
+    else {
+        split(t->left, l, t->left, pos);
+        r = t;
+    }
+    update(t);
 }
 
-int query(pnode t, int l, int r) {
-	pnode L, temp, R;
-	split(t, L, temp, l); split(temp, t, R, r-l+1);
-	int ans = t->sum;
-	merge(temp, L, t); merge(t, temp, R);
-	return ans;
+void insert_implicit(node *&t, int val, int pos) {
+    push(t);
+    node *l = NULL, *r = NULL;
+    split_implicit(t, l, r, pos - 1);
+    node *n = new node(val);
+    merge(l, l, n);
+    merge(t, l, r);
 }
 
-void update(pnode t, int l, int r, int val) {
-	pnode L, temp, R;
-	split(t, L, temp, l); split(temp, t, R, r-l+1);
-	t->lazy += val;
-	merge(temp, L, t); merge(t, temp, R);
+void erase_implicit(node *&t, int pos) {
+    push(t);
+    node *l = NULL, *r = NULL, *ll = NULL, *lr = NULL;
+    split_implicit(t, l, r, pos);
+    split_implicit(l, ll, lr, pos - 1);
+    merge(t, ll, r);
 }
-
-void printtreap(pnode t) {
-	if (!t) return;
-	printtreap(t->l);
-	cout << t->val << " ";
-	printtreap(t->r);
-}
-
-pnode treap = NULL;
