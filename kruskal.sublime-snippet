@@ -1,3 +1,5 @@
+<snippet>
+	<content><![CDATA[
 struct DSU {
     int comp;
     vector<int> par, size;
@@ -35,3 +37,34 @@ struct DSU {
         return false;
     }
 };
+
+struct Edge {
+    int u, v, weight;
+    bool operator<(Edge const& other) {
+        return weight < other.weight;
+    }
+};
+
+int n;
+vector<Edge> edges;
+
+    int cost = 0;
+    vector<Edge> result;
+
+    DSU dsu(n);
+
+    sort(edges.begin(), edges.end());
+
+    for (Edge e : edges) {
+        if (dsu.getpar(e.u) != dsu.getpar(e.v)) {
+            cost += e.weight;
+            result.push_back(e);
+            dsu.unite(e.u, e.v);
+        }
+    }
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>kruskal</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

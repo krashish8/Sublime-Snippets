@@ -43,7 +43,7 @@ hash_primes.cpp              |   Hash Primes
 dfs.cpp                      |   DFS
 dfs_full.cpp                 |   DFS Full
 bfs.cpp                      |   BFS
-djikstra.cpp                 |   Dijkstra
+dijkstra.cpp                 |   Dijkstra
 bipartite.cpp                |   Bipartite
 articulation_points.cpp      |   Articulation Point
 bellman_ford.cpp             |   Bellman Ford
