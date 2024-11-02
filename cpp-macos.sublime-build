@@ -1,5 +1,5 @@
 {
-	"shell_cmd": "/opt/homebrew/bin/g++-12 -std=c++14 -DLOCAL \"${file}\" -o \"${file_path}/${file_base_name}\" && \"${file_path}/${file_base_name}\" < ~/input.txt > ~/output.txt",
+	"shell_cmd": "g++ -std=c++17 -DLOCAL \"${file}\" -o \"${file_path}/${file_base_name}\" && \"${file_path}/${file_base_name}\" < ~/Documents/cpp/input.txt > ~/Documents/cpp/output.txt",
 	"file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 	"working_dir": "${file_path}",
 	"selector": "source.c++",
@@ -8,11 +8,11 @@
 	[
 		{
 			"name": "Run",
-			"shell_cmd": "/opt/homebrew/bin/g++-12 -std=c++14 -DLOCAL -Wall -Wno-unknown-pragmas -Wextra -O2 -Wshadow \"${file}\" -o \"${file_path}/${file_base_name}\" && \"${file_path}/${file_base_name}\" < ~/input.txt > ~/output.txt"
+			"shell_cmd": "g++ -std=c++17 -DLOCAL -Wall -Wno-unknown-pragmas -Wextra -O2 -Wshadow \"${file}\" -o \"${file_path}/${file_base_name}\" && \"${file_path}/${file_base_name}\" < ~/Documents/cpp/input.txt > ~/Documents/cpp/output.txt"
 		},
 		{
 			"name": "Check",
-			"shell_cmd": "/opt/homebrew/bin/g++-12 -std=c++14 -DLOCAL -Wall -Wno-unknown-pragmas -Wextra -O2 -Wshadow -pedantic -Wformat=2 -Wno-maybe-uninitialized -Wfloat-equal -Wconversion -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -fno-sanitize-recover -fstack-protector \"${file}\" -o \"${file_path}/${file_base_name}\" && \"${file_path}/${file_base_name}\" < ~/input.txt > ~/output.txt"
+			"shell_cmd": "g++ -std=c++17 -DLOCAL -Wall -Wno-unknown-pragmas -Wextra -O2 -Wshadow -pedantic -Wformat=2 -Wno-maybe-uninitialized -Wfloat-equal -Wconversion -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -fno-sanitize-recover -fstack-protector \"${file}\" -o \"${file_path}/${file_base_name}\" && \"${file_path}/${file_base_name}\" < ~/Documents/cpp/input.txt > ~/Documents/cpp/output.txt"
 		}
 	]
 }
